@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { skillsData } from '../data/skills';
 import type { SkillProficiencyLevel } from '../types';
+import { soundFx } from '../utils/soundEffects';
 
 export const SkillsSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -30,27 +31,27 @@ export const SkillsSection: React.FC = () => {
     switch (level) {
       case 'Actively Building':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-amber-950/60 text-amber-300 border border-amber-500/40 shadow-[0_0_8px_rgba(255,184,0,0.2)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
             Actively Building
           </span>
         );
       case 'Academic Projects':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-purple-950/60 text-purple-300 border border-purple-500/30">
-            <CheckCircle2 className="w-2.5 h-2.5 text-purple-400" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-yellow-950/60 text-yellow-300 border border-yellow-500/35">
+            <CheckCircle2 className="w-2.5 h-2.5 text-yellow-400" />
             Academic Projects
           </span>
         );
       case 'Core Knowledge':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-blue-950/60 text-blue-300 border border-blue-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-orange-950/60 text-orange-300 border border-orange-500/35">
             Core Knowledge
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
             {level}
           </span>
         );
@@ -67,20 +68,20 @@ export const SkillsSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 bg-cyan-950/20">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono text-amber-500 dark:text-amber-400 border border-amber-500/30 bg-amber-950/20 shadow-[0_0_12px_rgba(255,184,0,0.15)]">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>02 // TECHNICAL ARSENAL</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
-            Skills &amp; <span className="bg-gradient-to-r from-cyan-400 via-sky-400 to-purple-500 bg-clip-text text-transparent">Technologies</span>
+            Skills &amp; <span className="bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-500 bg-clip-text text-transparent">Technologies</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl text-sm sm:text-base">
             Verified candidate technologies used in coursework, project development, and engineering exploration.
           </p>
 
           {/* Honest transparency note */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-200/70 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 mt-2">
-            <Info className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 shrink-0" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-200/70 dark:bg-slate-900/60 border border-amber-500/20 text-xs text-slate-600 dark:text-slate-400 mt-2">
+            <Info className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0" />
             <span>Honest representation: no arbitrary percentage meters or artificial mastery claims.</span>
           </div>
         </div>
@@ -93,16 +94,19 @@ export const SkillsSection: React.FC = () => {
             return (
               <button
                 key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
+                onClick={() => {
+                  soundFx.playChime();
+                  setSelectedCategory(cat.id);
+                }}
                 role="tab"
                 aria-selected={isSelected}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all duration-200 ${
                   isSelected
-                    ? 'bg-cyan-500/20 border border-cyan-400/60 text-cyan-300 shadow-[0_0_15px_rgba(0,242,254,0.2)]'
-                    : 'bg-slate-900/50 hover:bg-slate-800/80 border border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-amber-500/20 border border-amber-400/60 text-amber-600 dark:text-amber-300 shadow-[0_0_15px_rgba(255,184,0,0.25)] font-semibold'
+                    : 'bg-slate-100 dark:bg-slate-900/50 hover:bg-slate-200 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-cyan-400' : 'text-slate-500'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-amber-500 dark:text-amber-400' : 'text-slate-400'}`} />
                 <span>{cat.label}</span>
               </button>
             );
@@ -115,7 +119,7 @@ export const SkillsSection: React.FC = () => {
             <div key={group.id} className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-slate-200 dark:border-slate-800/80 pb-3">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_#00f2fe]" />
+                  <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#ffb800]" />
                   {group.categoryName}
                 </h3>
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
@@ -128,11 +132,11 @@ export const SkillsSection: React.FC = () => {
                 {group.skills.map((skill, sIdx) => (
                   <div
                     key={sIdx}
-                    className="glass-card rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800/80 hover:border-cyan-500/40 flex flex-col justify-between group"
+                    className="glass-card rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800/80 hover:border-amber-500/40 flex flex-col justify-between group"
                   >
                     <div>
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <h4 className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors text-base">
+                        <h4 className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-amber-500 dark:group-hover:text-amber-300 transition-colors text-base">
                           {skill.name}
                         </h4>
                         {getLevelBadge(skill.level)}
@@ -146,7 +150,7 @@ export const SkillsSection: React.FC = () => {
 
                     <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-500">
                       <span>Category: {group.categoryName.split(' ')[0]}</span>
-                      <span className="group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors font-medium">Verified</span>
+                      <span className="group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors font-medium">Verified</span>
                     </div>
                   </div>
                 ))}

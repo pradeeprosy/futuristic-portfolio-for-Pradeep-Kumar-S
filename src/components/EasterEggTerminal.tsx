@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import { profileData } from '../data/profile';
 import { projectsData } from '../data/projects';
 import { skillsData } from '../data/skills';
+import { soundFx } from '../utils/soundEffects';
 
 interface EasterEggTerminalProps {
   isOpen: boolean;
@@ -14,7 +15,7 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
   const [history, setHistory] = useState<Array<{ command: string; output: string }>>([
     {
       command: 'system.init',
-      output: `Pradeep Kumar S [Core v1.0.0]\nType 'help' for a list of available engineering terminal commands.`,
+      output: `Pradeep Kumar S (Rosy 👑) [Solar Core Engine v2.0]\nType 'help' for available terminal commands or 'crown' to ignite solar celebration.`,
     },
   ]);
   const [input, setInput] = useState('');
@@ -35,6 +36,7 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
     const cmd = input.trim().toLowerCase();
     if (!cmd) return;
 
+    soundFx.playHoverChime();
     let output = '';
 
     switch (cmd) {
@@ -42,18 +44,30 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
         output = 
           `Available Commands:\n` +
           `  about       - Display Pradeep's background & status\n` +
+          `  rosy        - Unveil the Rosy crown signature lore 👑\n` +
+          `  crown       - Ignite radiant golden embers & chime\n` +
           `  skills      - List verified technical competencies\n` +
           `  projects    - List candidate engineering projects\n` +
           `  dubai       - Show career relocation & employment aspirations\n` +
           `  contact     - Display verified communication endpoints\n` +
-          `  matrix      - Trigger cyber confetti celebration\n` +
-          `  sudo        - Try administrative superuser override\n` +
           `  clear       - Clear terminal buffer\n` +
           `  exit        - Close terminal window`;
         break;
 
+      case 'rosy':
+      case 'crown':
+        output = `👑 ROSY SIGNATURE IGNITED!\nRadiant golden neon ring & crown branding unlocked. Striving for software excellence and memorable digital experiences.`;
+        soundFx.playGoldSuccess();
+        confetti({
+          particleCount: 90,
+          spread: 90,
+          origin: { y: 0.6 },
+          colors: ['#ffd60a', '#ffb703', '#fb8500', '#ff5400', '#fff3b0'],
+        });
+        break;
+
       case 'about':
-        output = `${profileData.fullName}\n${profileData.professionalHeadline}\n${profileData.heroIntro}`;
+        output = `${profileData.fullName} (${profileData.preferredName} 👑)\n${profileData.professionalHeadline}\n${profileData.heroIntro}`;
         break;
 
       case 'skills':
@@ -70,9 +84,9 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
 
       case 'dubai':
         output = 
-          `RELOCATION TARGET: DUBAI & INTERNATIONAL HUBS\n` +
+          `RELOCATION TARGET: DUBAI & INTERNATIONAL TECH HUBS\n` +
           `Pradeep is actively seeking software engineering roles, internships, and technology graduate opportunities in Dubai and India.`;
-        confetti({ particleCount: 40, spread: 60, colors: ['#00f2fe', '#4facfe'] });
+        confetti({ particleCount: 45, spread: 65, colors: ['#ffd60a', '#ffb703', '#fb8500'] });
         break;
 
       case 'contact':
@@ -81,20 +95,6 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
           `GitHub:   ${profileData.contact.githubUrl}\n` +
           `LinkedIn: ${profileData.contact.linkedinUrl}\n` +
           `Location: ${profileData.contact.location}`;
-        break;
-
-      case 'matrix':
-        output = `Cyber visual surge initiated...`;
-        confetti({
-          particleCount: 100,
-          spread: 100,
-          origin: { y: 0.6 },
-          colors: ['#00f2fe', '#22c55e', '#a855f7'],
-        });
-        break;
-
-      case 'sudo':
-        output = `ACCESS DENIED: Pradeep Kumar S is the only authorized superuser on this node!`;
         break;
 
       case 'clear':
@@ -121,17 +121,18 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
       role="dialog"
       aria-modal="true"
       aria-labelledby="easter-egg-terminal-title"
+      onClick={onClose}
     >
       <div 
-        className="w-full max-w-2xl h-[460px] flex flex-col bg-[#050811] rounded-2xl border border-cyan-500/40 shadow-[0_0_50px_rgba(0,242,254,0.2)] overflow-hidden font-mono text-xs"
+        className="w-full max-w-2xl h-[460px] flex flex-col bg-[#050402] rounded-2xl border border-amber-500/40 shadow-[0_0_50px_rgba(255,184,0,0.2)] overflow-hidden font-mono text-xs"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Terminal Titlebar */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-cyan-500/20 select-none">
-          <div className="flex items-center gap-2 text-cyan-400">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-slate-950 border-b border-amber-500/20 select-none">
+          <div className="flex items-center gap-2 text-amber-400">
             <Terminal className="w-4 h-4" />
             <span id="easter-egg-terminal-title" className="font-semibold text-slate-200">
-              pradeep@portfolio-core:~
+              pradeep-rosy@solar-core:~ 👑
             </span>
           </div>
 
@@ -155,11 +156,11 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
         <div className="flex-1 overflow-y-auto p-4 space-y-3 text-slate-300">
           {history.map((item, idx) => (
             <div key={idx} className="space-y-1">
-              <div className="flex items-center gap-2 text-cyan-400">
-                <span className="text-purple-400">guest@core:~$</span>
+              <div className="flex items-center gap-2 text-amber-400">
+                <span className="text-orange-400">guest@rosy-core:~$</span>
                 <span>{item.command}</span>
               </div>
-              <div className="text-slate-300 whitespace-pre-wrap pl-4 border-l border-slate-800 leading-relaxed">
+              <div className="text-slate-300 whitespace-pre-wrap pl-4 border-l border-amber-500/30 leading-relaxed">
                 {item.output}
               </div>
             </div>
@@ -168,15 +169,15 @@ export const EasterEggTerminal: React.FC<EasterEggTerminalProps> = ({ isOpen, on
         </div>
 
         {/* Input Line */}
-        <form onSubmit={handleCommand} className="flex items-center gap-2 p-3 bg-slate-950 border-t border-slate-800">
-          <span className="text-purple-400 pl-1">guest@core:~$</span>
+        <form onSubmit={handleCommand} className="flex items-center gap-2 p-3 bg-black border-t border-slate-900">
+          <span className="text-orange-400 pl-1">guest@rosy-core:~$</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type 'help'..."
-            className="flex-1 bg-transparent text-cyan-300 focus:outline-none placeholder-slate-600"
+            placeholder="Type 'help' or 'crown'..."
+            className="flex-1 bg-transparent text-amber-300 focus:outline-none placeholder-slate-600"
           />
           <CornerDownLeft className="w-3.5 h-3.5 text-slate-500 mr-1" />
         </form>

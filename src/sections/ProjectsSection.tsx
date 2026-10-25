@@ -9,6 +9,7 @@ import { projectsData } from '../data/projects';
 import type { ProjectCategory, ProjectItem } from '../types';
 import { ProjectCard } from '../components/ProjectCard';
 import { ProjectModal } from '../components/ProjectModal';
+import { soundFx } from '../utils/soundEffects';
 
 interface ProjectsSectionProps {
   onOpenContact: () => void;
@@ -36,12 +37,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
         
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 bg-cyan-950/20">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-amber-500 dark:text-amber-400 border border-amber-500/20 bg-amber-950/20">
             <Sparkles className="w-3.5 h-3.5" />
             <span>03 // PORTFOLIO WORK</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
-            Featured <span className="bg-gradient-to-r from-cyan-400 via-sky-400 to-purple-500 bg-clip-text text-transparent">Projects</span>
+            Featured <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent">Projects</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl text-sm sm:text-base">
             Curated selection of college coursework, full-stack prototypes, and conceptual software engineering platforms.
@@ -49,7 +50,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
 
           {/* Academic Candidate Transparency Disclaimer */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-200/70 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 mt-2">
-            <Info className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 shrink-0" />
+            <Info className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0" />
             <span>Candidate academic projects shown with genuine architectural specs. Source code available on request.</span>
           </div>
         </div>
@@ -64,12 +65,15 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
               return (
                 <button
                   key={cat}
-                  onClick={() => setSelectedCategory(cat)}
+                  onClick={() => {
+                    soundFx.playHoverChime();
+                    setSelectedCategory(cat);
+                  }}
                   role="tab"
                   aria-selected={isSelected}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all ${
                     isSelected
-                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-[0_0_12px_rgba(0,242,254,0.15)] font-semibold'
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-400/40 shadow-[0_0_12px_rgba(255,184,0,0.2)] font-semibold'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                   }`}
                 >
@@ -87,7 +91,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Filter by tech or keyword..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-slate-900/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/60 transition-colors"
+              className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-slate-900/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/60 transition-colors"
             />
           </div>
 
@@ -114,10 +118,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
             </p>
             <button
               onClick={() => {
+                soundFx.playHoverChime();
                 setSelectedCategory('All');
                 setSearchQuery('');
               }}
-              className="mt-4 px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition-colors"
+              className="mt-4 px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition-colors"
             >
               Reset Filters
             </button>

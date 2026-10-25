@@ -24,8 +24,8 @@ export const ToastNotification: React.FC<ToastProps> = ({
 
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5 fade-in duration-300">
-      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl glass-panel border border-cyan-500/40 text-slate-100 shadow-[0_0_25px_rgba(0,242,254,0.25)]">
-        <CheckCircle2 className="w-5 h-5 text-cyan-400 shrink-0" />
+      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl glass-panel border border-amber-500/40 text-slate-100 shadow-[0_0_25px_rgba(255,184,0,0.25)]">
+        <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0" />
         <span className="text-xs sm:text-sm font-medium">{message}</span>
         <button
           onClick={onClose}

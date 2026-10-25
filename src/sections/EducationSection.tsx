@@ -16,9 +16,8 @@ export const EducationSection: React.FC = () => {
   const { education, aspirations } = profileData;
 
   // Real data check: Optional sections are empty until confirmed by Pradeep.
-  // We keep them configured in state/logic, and render a clean "Opportunities Wanted" card rather than fake records.
-  const hasWorkExperience = false; // Set to true once verified internships or roles exist
-  const hasCertifications = false; // Set to true once real certificates are uploaded
+  const hasWorkExperience = false;
+  const hasCertifications = false;
 
   return (
     <section id="education" className="relative py-24 scroll-mt-16">
@@ -26,12 +25,12 @@ export const EducationSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3 mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 bg-cyan-950/20">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-amber-500 dark:text-amber-400 border border-amber-500/20 bg-amber-950/20">
             <Sparkles className="w-3.5 h-3.5" />
             <span>04 // ACADEMIC &amp; CAREER PATH</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
-            Education &amp; <span className="bg-gradient-to-r from-cyan-400 via-sky-400 to-purple-500 bg-clip-text text-transparent">Trajectory</span>
+            Education &amp; <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent">Trajectory</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl text-sm sm:text-base">
             Formal foundations in computer science, structured engineering coursework, and future career targets.
@@ -43,11 +42,11 @@ export const EducationSection: React.FC = () => {
           
           {/* Main Degree Card (8 cols) */}
           <div className="lg:col-span-8 space-y-6">
-            <div className="glass-card rounded-3xl p-6 sm:p-8 border border-cyan-500/20 relative overflow-hidden shadow-[0_0_40px_rgba(0,242,254,0.06)]">
+            <div className="glass-card rounded-3xl p-6 sm:p-8 border border-amber-500/20 relative overflow-hidden shadow-[0_0_40px_rgba(255,184,0,0.08)]">
               
               {/* Top Meta Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-amber-950/80 text-amber-300 border border-amber-500/30">
                   <GraduationCap className="w-3.5 h-3.5" />
                   <span>{education.status}</span>
                 </div>
@@ -61,15 +60,15 @@ export const EducationSection: React.FC = () => {
               <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100">
                 {education.degree}
               </h3>
-              <p className="text-base sm:text-lg font-medium text-cyan-600 dark:text-cyan-400 mt-1">
+              <p className="text-base sm:text-lg font-medium text-amber-600 dark:text-amber-400 mt-1">
                 {education.field}
               </p>
               
               <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-mono mt-2">
-                <span className="text-purple-600 dark:text-purple-400 font-semibold">{education.institution}</span>
+                <span className="text-orange-500 dark:text-orange-400 font-semibold">{education.institution}</span>
                 <span className="text-slate-400 dark:text-slate-600">•</span>
                 <span className="flex items-center gap-1 text-slate-600 dark:text-slate-400">
-                  <MapPin className="w-3 h-3 text-rose-500" />
+                  <MapPin className="w-3 h-3 text-amber-500" />
                   {education.location}
                 </span>
               </div>
@@ -77,13 +76,13 @@ export const EducationSection: React.FC = () => {
               {/* Academic Highlights */}
               <div className="mt-6 pt-6 border-t border-slate-800">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+                  <CheckCircle2 className="w-4 h-4 text-amber-400" />
                   <span>Core Academic Competencies</span>
                 </h4>
                 <div className="space-y-2">
                   {education.academicHighlights.map((highlight, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 shrink-0 shadow-[0_0_6px_rgba(255,184,0,0.8)]" />
                       <span className="leading-relaxed">{highlight}</span>
                     </div>
                   ))}
@@ -93,14 +92,14 @@ export const EducationSection: React.FC = () => {
               {/* Coursework Tags */}
               <div className="mt-6 pt-6 border-t border-slate-800">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-purple-400" />
+                  <BookOpen className="w-4 h-4 text-orange-400" />
                   <span>Relevant Coursework</span>
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {education.keyCourses.map((course, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 rounded-xl text-xs font-mono bg-slate-900 border border-slate-800 text-slate-300 hover:border-cyan-500/40 hover:text-cyan-300 transition-colors"
+                      className="px-3 py-1 rounded-xl text-xs font-mono bg-slate-900 border border-slate-800 text-slate-300 hover:border-amber-500/40 hover:text-amber-300 transition-colors"
                     >
                       {course}
                     </span>
@@ -110,24 +109,22 @@ export const EducationSection: React.FC = () => {
 
             </div>
 
-            {/* If work experience or internships exist in future, render here. Empty sections hidden. */}
+            {/* If work experience or internships exist in future, render here */}
             {hasWorkExperience && (
               <div className="glass-card rounded-3xl p-6 border border-slate-800">
                 <h4 className="text-sm font-bold text-slate-200 flex items-center gap-2 mb-3">
-                  <Briefcase className="w-4 h-4 text-cyan-400" />
+                  <Briefcase className="w-4 h-4 text-amber-400" />
                   <span>Work Experience &amp; Internships</span>
                 </h4>
-                {/* Dynamically populated when configured */}
               </div>
             )}
 
             {hasCertifications && (
               <div className="glass-card rounded-3xl p-6 border border-slate-800">
                 <h4 className="text-sm font-bold text-slate-200 flex items-center gap-2 mb-3">
-                  <Award className="w-4 h-4 text-purple-400" />
+                  <Award className="w-4 h-4 text-orange-400" />
                   <span>Certifications &amp; Credentials</span>
                 </h4>
-                {/* Dynamically populated when configured */}
               </div>
             )}
           </div>
@@ -136,15 +133,15 @@ export const EducationSection: React.FC = () => {
           <div className="lg:col-span-4 space-y-6">
             
             {/* Global Opportunity & Relocation Card */}
-            <div className="glass-card rounded-3xl p-6 sm:p-7 border border-purple-500/30 bg-gradient-to-b from-purple-950/20 to-transparent">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-300 mb-4">
+            <div className="glass-card rounded-3xl p-6 sm:p-7 border border-amber-500/30 bg-gradient-to-b from-amber-950/20 to-transparent">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 mb-4">
                 <Compass className="w-5 h-5" />
               </div>
 
               <h4 className="text-lg font-bold text-slate-100">
                 Targeted Career Move
               </h4>
-              <p className="text-xs text-purple-300 font-mono mt-0.5">
+              <p className="text-xs text-amber-300 font-mono mt-0.5">
                 India &amp; Dubai Tech Ecosystems
               </p>
 
@@ -154,7 +151,7 @@ export const EducationSection: React.FC = () => {
 
               <div className="mt-5 space-y-2.5">
                 <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
-                  <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block mb-0.5">
+                  <span className="text-[10px] font-mono text-amber-400 uppercase tracking-wider block mb-0.5">
                     Primary Target
                   </span>
                   <span className="font-semibold text-slate-200">
@@ -163,7 +160,7 @@ export const EducationSection: React.FC = () => {
                 </div>
 
                 <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
-                  <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-0.5">
+                  <span className="text-[10px] font-mono text-orange-400 uppercase tracking-wider block mb-0.5">
                     Target Regions
                   </span>
                   <span className="text-slate-300 font-medium">

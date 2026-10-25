@@ -29,10 +29,12 @@ export async function getAiAssistantResponse(query: string): Promise<string> {
   }
 
   // Simulate realistic thinking delay for natural conversational rhythm
-  await new Promise((resolve) => setTimeout(resolve, 600));
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
-  // 1. Identity / Who is Pradeep
+  // 1. Identity / Who is Pradeep / Rosy
   if (
+    normalized.includes('rosy') ||
+    normalized.includes('crown') ||
     normalized.includes('who is') ||
     normalized.includes('introduce') ||
     normalized.includes('about') ||
@@ -40,9 +42,9 @@ export async function getAiAssistantResponse(query: string): Promise<string> {
     normalized.includes('background')
   ) {
     return (
-      `**${profileData.fullName}** is an enthusiastic **${profileData.education.degree} in ${profileData.education.field}** student in India.\n\n` +
-      `He is an aspiring software developer passionate about building useful, scalable software systems, web applications, and practical AI tools. ` +
-      `He is currently pursuing his degree (expected 2026) and seeking engineering roles in India and international hubs like Dubai.`
+      `**${profileData.fullName}** (known professionally and creatively as **${profileData.preferredName}** 👑) is a dedicated **${profileData.education.degree} in ${profileData.education.field}** student.\n\n` +
+      `He blends engineering foundations with high-impact creative development. The "ROSY" crown emblem symbolizes his drive for excellence, resilience, and personal creative branding.\n\n` +
+      `He is currently pursuing his degree (expected 2026) and seeking software engineering roles in India and international tech hubs like Dubai.`
     );
   }
 
@@ -191,7 +193,7 @@ export async function getAiAssistantResponse(query: string): Promise<string> {
   // Default helpful response
   return (
     `I am **Pradeep's verified AI portfolio assistant**. I can answer questions about:\n\n` +
-    `• Pradeep's background & education\n` +
+    `• Pradeep (Rosy 👑)'s background & education\n` +
     `• Verified technical skills in Python, Java, React, FastAPI, etc.\n` +
     `• Projects like QuotaGuard, AI College Chatbot, and Food Ordering\n` +
     `• Career goals & availability for opportunities (including Dubai & India)\n` +
@@ -201,7 +203,7 @@ export async function getAiAssistantResponse(query: string): Promise<string> {
 }
 
 export const defaultAssistantSuggestions = [
-  "Who is Pradeep Kumar S?",
+  "Who is Pradeep (Rosy)?",
   "What projects has he built?",
   "Which technologies does he use?",
   "What are his career goals in Dubai?",

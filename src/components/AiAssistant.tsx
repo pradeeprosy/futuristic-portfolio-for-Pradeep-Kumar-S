@@ -11,6 +11,7 @@ import {
 import type { ChatMessage } from '../types';
 import { getAiAssistantResponse, defaultAssistantSuggestions } from '../utils/aiHelper';
 import { profileData } from '../data/profile';
+import { soundFx } from '../utils/soundEffects';
 
 interface AiAssistantProps {
   isOpen: boolean;
@@ -22,7 +23,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
     {
       id: 'welcome',
       sender: 'assistant',
-      text: `Hello! I am **Pradeep's AI Portfolio Assistant**.\n\nI can answer questions regarding Pradeep's computer science background, candidate projects (like QuotaGuard & AI College Chatbot), verified technologies, and software engineering career goals in Dubai and India.`,
+      text: `Hello! I am **${profileData.fullName} (${profileData.preferredName} 👑)'s AI Assistant**.\n\nI can answer questions regarding Pradeep's computer science background, candidate projects (like QuotaGuard & AI College Chatbot), verified technologies, and software engineering career goals in Dubai and India.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       suggestions: defaultAssistantSuggestions,
     },
@@ -47,6 +48,8 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
   const handleSend = async (queryText?: string) => {
     const textToSend = queryText || input;
     if (!textToSend.trim() || isTyping) return;
+
+    soundFx.playHoverChime();
 
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -82,11 +85,12 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
   };
 
   const handleResetChat = () => {
+    soundFx.playHoverChime();
     setMessages([
       {
         id: `reset-${Date.now()}`,
         sender: 'assistant',
-        text: `Chat reset. What would you like to know about ${profileData.fullName}?`,
+        text: `Chat reset. What would you like to know about ${profileData.fullName} (${profileData.preferredName} 👑)?`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestions: defaultAssistantSuggestions,
       },
@@ -99,23 +103,25 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
       role="dialog"
       aria-modal="true"
       aria-labelledby="ai-assistant-title"
+      onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-2xl h-[85vh] max-h-[700px] flex flex-col glass-panel rounded-3xl border border-purple-500/30 shadow-[0_0_60px_rgba(168,85,247,0.2)] overflow-hidden"
+        className="relative w-full max-w-2xl h-[85vh] max-h-[700px] flex flex-col glass-panel rounded-3xl border border-amber-500/30 shadow-[0_0_60px_rgba(255,184,0,0.2)] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-purple-500/20 bg-slate-900/40">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-amber-500/20 bg-slate-900/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 via-indigo-600 to-cyan-400 p-[1.5px] shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-              <div className="w-full h-full bg-[#070b1a] rounded-[14px] flex items-center justify-center">
-                <Bot className="w-5 h-5 text-cyan-300" />
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-500 p-[1.5px] shadow-[0_0_15px_rgba(255,184,0,0.4)]">
+              <div className="w-full h-full bg-[#080602] rounded-[14px] flex items-center justify-center">
+                <Bot className="w-5 h-5 text-amber-300" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 id="ai-assistant-title" className="font-bold text-sm text-slate-100">
-                  Pradeep's AI Assistant
+                <h3 id="ai-assistant-title" className="font-bold text-sm text-slate-100 flex items-center gap-1.5">
+                  <span>Pradeep's AI Assistant</span>
+                  <span className="text-amber-400 text-xs">👑</span>
                 </h3>
                 <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/30 text-emerald-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -123,7 +129,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-cyan-400" />
+                <ShieldCheck className="w-3 h-3 text-amber-400" />
                 Verified portfolio knowledge base
               </p>
             </div>
@@ -158,7 +164,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
                 className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
               >
                 {!isUser && (
-                  <div className="w-8 h-8 rounded-xl bg-purple-950/80 border border-purple-500/30 flex items-center justify-center text-purple-300 shrink-0 mt-1">
+                  <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/30 flex items-center justify-center text-amber-300 shrink-0 mt-1">
                     <Sparkles className="w-4 h-4" />
                   </div>
                 )}
@@ -167,8 +173,8 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
                   <div 
                     className={`rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed ${
                       isUser
-                        ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-medium rounded-tr-sm'
-                        : 'bg-slate-900/80 border border-slate-800 text-slate-200 rounded-tl-sm shadow-md'
+                        ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-500 text-slate-950 font-semibold rounded-tr-sm shadow-[0_0_15px_rgba(255,184,0,0.2)]'
+                        : 'bg-slate-900/90 border border-slate-800 text-slate-200 rounded-tl-sm shadow-md'
                     }`}
                   >
                     <div className="whitespace-pre-line">
@@ -187,7 +193,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
                         <button
                           key={sIdx}
                           onClick={() => handleSend(sug)}
-                          className="px-2.5 py-1 rounded-xl text-[11px] font-mono bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 hover:border-purple-400 text-purple-200 transition-colors text-left"
+                          className="px-2.5 py-1 rounded-xl text-[11px] font-mono bg-amber-950/40 hover:bg-amber-900/60 border border-amber-500/30 hover:border-amber-400 text-amber-200 transition-colors text-left"
                         >
                           {sug}
                         </button>
@@ -197,7 +203,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
                 </div>
 
                 {isUser && (
-                  <div className="w-8 h-8 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-300 shrink-0 mt-1">
+                  <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0 mt-1">
                     <User className="w-4 h-4" />
                   </div>
                 )}
@@ -208,13 +214,13 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
           {/* Typing Indicator */}
           {isTyping && (
             <div className="flex gap-3 justify-start">
-              <div className="w-8 h-8 rounded-xl bg-purple-950/80 border border-purple-500/30 flex items-center justify-center text-purple-300 shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/30 flex items-center justify-center text-amber-300 shrink-0">
                 <Sparkles className="w-4 h-4 animate-spin" />
               </div>
               <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-slate-400 text-xs flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-bounce" />
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce [animation-delay:0.2s]" />
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce [animation-delay:0.4s]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" />
+                <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-bounce [animation-delay:0.2s]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-bounce [animation-delay:0.4s]" />
                 <span className="font-mono text-[11px] ml-1 text-slate-400">Synthesizing verified data...</span>
               </div>
             </div>
@@ -224,7 +230,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Prompt Input Bar */}
-        <div className="p-3 sm:p-4 border-t border-purple-500/20 bg-slate-900/50">
+        <div className="p-3 sm:p-4 border-t border-amber-500/20 bg-slate-900/60">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -238,12 +244,12 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ isOpen, onClose }) => 
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything about Pradeep's skills, projects, or goals..."
               disabled={isTyping}
-              className="flex-1 px-4 py-2.5 rounded-2xl text-xs bg-slate-900 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2.5 rounded-2xl text-xs bg-slate-900 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition-colors disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={!input.trim() || isTyping}
-              className="p-2.5 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-semibold hover:from-cyan-300 hover:to-blue-400 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-[0_0_15px_rgba(0,242,254,0.3)]"
+              className="p-2.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-bold hover:from-amber-300 hover:to-orange-400 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-[0_0_15px_rgba(255,184,0,0.3)]"
               aria-label="Send query"
             >
               <Send className="w-4 h-4" />

@@ -7,3 +7,4 @@ To display your photograph on the portfolio:
    `profileImageUrl: "/images/profile.jpg"`
 3. Save the file. Your portfolio will immediately update!
 =======================================================
+

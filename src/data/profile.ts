@@ -11,19 +11,15 @@ import type { ProfileData } from '../types';
 
 export const profileData: ProfileData = {
   fullName: "Pradeep Kumar S",
-  preferredName: "Pradeep",
+  preferredName: "Pradeep (Rosy)",
   professionalHeadline: "Computer Science Engineering Student | Aspiring Software Developer",
   
   /**
    * ===================================================================
    * 📸 PROFILE IMAGE CONFIGURATION
    * ===================================================================
-   * To display your real photo:
-   * 1. Save your photo into `public/images/profile.jpg` (or .png/.webp)
-   * 2. Set `profileImageUrl: "/images/profile.jpg"` below.
-   * 3. Leave as "" to show the futuristic cyber-avatar placeholder.
    */
-  profileImageUrl: "",
+  profileImageUrl: "/images/pradeep-profile.jpg",
   
   heroIntro: 
     "Engineering student driven by curiosity for robust software systems, modern web development, and artificial intelligence. Dedicated to turning algorithmic concepts into functional, scalable digital solutions.",
@@ -59,9 +55,9 @@ export const profileData: ProfileData = {
     degree: "Bachelor of Engineering (B.E.)",
     field: "Computer Science and Engineering",
     // EDITABLE PLACEHOLDER: Replace with your actual college/university name
-    institution: "[Your College / University Name]", 
+    institution: "Vinayaka Mission's Kirupananda Variyar Engineering College", 
     // EDITABLE PLACEHOLDER: Replace with your actual graduation or study years
-    period: "Undergraduate Engineering Student (Expected 2026)", 
+    period: "Undergraduate Engineering Student (Expected 2028)", 
     status: "Currently Pursuing",
     location: "India",
     keyCourses: [
