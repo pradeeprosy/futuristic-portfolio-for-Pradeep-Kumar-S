@@ -24,7 +24,6 @@ async function runTests() {
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
       const text = msg.text();
-      // Filter non-fatal 404 on local favicon or missing resume file
       if (!text.includes('favicon.ico') && !text.includes('Failed to load resource')) {
         consoleErrors.push(text);
         console.error('Browser Console Error:', text);
@@ -46,7 +45,7 @@ async function runTests() {
     document.documentElement.classList.add('dark');
     document.documentElement.classList.remove('light');
   });
-  await new Promise(r => setTimeout(r, 1500)); // Allow 3D canvas and animations to render
+  await new Promise(r => setTimeout(r, 1500));
 
   const desktopHomePath = path.join(screenshotDir, '01_desktop_hero.png');
   await page.screenshot({ path: desktopHomePath });
@@ -83,7 +82,6 @@ async function runTests() {
   if (openedAi) {
     await new Promise(r => setTimeout(r, 600));
 
-    // Type query
     await page.type('input[placeholder*="Ask anything"]', 'What are Pradeep\'s main projects?');
     await page.keyboard.press('Enter');
     await new Promise(r => setTimeout(r, 1200));
@@ -92,7 +90,6 @@ async function runTests() {
     await page.screenshot({ path: aiModalPath });
     console.log('✓ AI Assistant modal and chat verified:', aiModalPath);
 
-    // Close assistant
     await page.evaluate(() => {
       const closeBtn = document.querySelector('button[aria-label="Close assistant"]');
       if (closeBtn) closeBtn.click();
@@ -120,7 +117,6 @@ async function runTests() {
   await page.screenshot({ path: projectModalPath });
   console.log('✓ Project architecture modal captured:', projectModalPath);
 
-  // Close project modal
   await page.evaluate(() => {
     const closeProjBtn = document.querySelector('button[aria-label="Close project details"]');
     if (closeProjBtn) closeProjBtn.click();
@@ -152,6 +148,43 @@ async function runTests() {
     await new Promise(r => setTimeout(r, 400));
   }
 
+  // 5b. TEST DIRECT TRANSMISSION FORM (WITHOUT NAVIGATING TO EMAIL)
+  console.log('⚡ Testing Direct Transmission (No email client navigation)...');
+  await page.evaluate(() => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) contactSection.scrollIntoView();
+  });
+  await new Promise(r => setTimeout(r, 600));
+
+  await page.type('#contact-name', 'Sarah Connor');
+  await page.type('#contact-email', 'sarah@techfuture.io');
+  await page.type('#contact-subject', 'Software Engineering Opportunity in Dubai');
+  await page.type('#contact-message', 'Hello Pradeep, we reviewed your projects and would like to discuss a software developer opportunity.');
+
+  // Submit direct message
+  await page.evaluate(() => {
+    const submitBtn = document.querySelector('form button[type="submit"]');
+    if (submitBtn) submitBtn.click();
+  });
+
+  // Wait for direct transmission completion
+  await page.waitForFunction(
+    () => document.body.innerText.includes('Transmission Dispatched Directly'),
+    { timeout: 8000 }
+  );
+
+  // Verify URL did NOT navigate to mailto:
+  const currentUrl = page.url();
+  if (currentUrl.startsWith('mailto:')) {
+    throw new Error('Form navigated to mailto: unexpectedly!');
+  }
+  console.log('✓ Verified: page remained in-app without navigating to external email client!');
+  console.log('✓ Verified: In-page direct transmission confirmation banner displayed successfully!');
+
+  const directTransmissionPath = path.join(screenshotDir, '11_direct_transmission_success.png');
+  await page.screenshot({ path: directTransmissionPath });
+  console.log('✓ Direct transmission screenshot captured:', directTransmissionPath);
+
   // 6. TEST THEME SWITCHER (LIGHT MODE)
   console.log('☀️ Testing Light Theme Toggle...');
   await page.evaluate(() => {
@@ -164,7 +197,7 @@ async function runTests() {
   await page.screenshot({ path: lightModePath });
   console.log('✓ Light mode captured:', lightModePath);
 
-  // Switch back to futuristic dark mode
+  // Switch back to dark mode
   await page.evaluate(() => {
     localStorage.setItem('pradeep_portfolio_theme', 'dark');
     document.documentElement.classList.add('dark');
