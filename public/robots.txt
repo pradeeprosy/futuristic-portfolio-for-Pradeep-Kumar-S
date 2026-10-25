@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pradeep-portfolio.dev/sitemap.xml
