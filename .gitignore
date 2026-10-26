@@ -23,3 +23,4 @@ test_shot*.png
 *.njsproj
 *.sln
 *.sw?
+.vercel
